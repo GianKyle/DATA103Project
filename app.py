@@ -1,7 +1,3 @@
-# titanic_dashboard.py
-# Author: Gian Kyle Masinda
-# Description: Interactive Titanic ML dashboard with explainability and fairness insights
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -25,14 +21,13 @@ st.caption("Interactive Machine Learning Dashboard — Predict, Explain, and Aud
 # ------------------------------------------------------------
 @st.cache_resource
 def load_models():
-    logit = joblib.load("project/logistic_model.pkl")
-    rf = joblib.load("project/rf_model.pkl")
+    logit = joblib.load("logistic_model.pkl")
+    rf = joblib.load("rf_model.pkl")
     return logit, rf
 
 @st.cache_data
 def load_data():
-    # You can replace this with your Titanic CSV
-    df = pd.read_csv("project/titanic_cleaned.csv")
+    df = pd.read_csv("titanic_cleaned.csv")
     return df
 
 clf_logit, clf_rf = load_models()
@@ -67,12 +62,12 @@ class_descriptions = {
 st.sidebar.markdown(class_descriptions[pclass])
 
 # ------------------------------------------------------------
-# FEATURE ENGINEERING (match training features exactly)
+# FEATURE ENGINEERING
 # ------------------------------------------------------------
 
 # Derive engineered features EXACTLY like in your notebook
 
-# 1. Title (you don't ask Name, so default based on Sex and Age)
+# 1. Title
 def infer_title(sex, age):
     if sex == "female":
         return "Miss" if age < 25 else "Mrs"
@@ -286,4 +281,4 @@ with tab3:
 # FOOTER
 # ------------------------------------------------------------
 st.markdown("---")
-st.caption("Built by Gian Kyle Masinda — Titanic Machine Learning Project (Phase 1)")
+st.caption("Built by Group 5")
