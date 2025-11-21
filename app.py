@@ -50,6 +50,37 @@ family_size = sibsp + parch + 1
 is_alone = 1 if family_size == 1 else 0
 fare_per_person = fare / family_size if family_size > 0 else fare
 
+# ===============================
+# VALIDATION RULES
+# ===============================
+
+warnings = []
+errors = []
+
+# Child-alone rule (your main requirement)
+if age <= 8 and sibsp == 0 and parch == 0:
+    errors.append(
+        "🚨 Children aged 8 or below cannot realistically travel completely alone. "
+        "Please add at least a sibling (SibSp ≥ 1) or a parent (Parch ≥ 1)."
+    )
+
+# (Optional) Infant rule
+if age <= 1 and parch == 0:
+    errors.append(
+        "🚨 Infants (age ≤ 1) must have at least one parent on board (Parch ≥ 1)."
+    )
+
+# Display warnings/errors
+for w in warnings:
+    st.warning(w)
+
+for e in errors:
+    st.error(e)
+
+# Stop execution if any hard errors exist
+if errors:
+    st.stop()
+
 # ------------------------------------------------------------
 # CLASS DESCRIPTIONS
 # ------------------------------------------------------------
